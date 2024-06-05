@@ -182,7 +182,7 @@ fn main() {
     .arg(format!("--with-version={je_version}"))
     .arg("--disable-cxx")
     .arg("--enable-doc=no")
-    .arg("--enable-shared=no");
+    .arg("--enable-shared=yes");
 
     if target.contains("ios") {
         // newer iOS deviced have 16kb page sizes:
@@ -307,7 +307,7 @@ fn main() {
     // Make install:
     run(Command::new(make)
         .current_dir(&build_dir)
-        .arg("install_lib_static")
+        .arg("install_lib_shared")
         .arg("install_include")
         .arg("-j")
         .arg(num_jobs));
@@ -324,7 +324,7 @@ fn main() {
     if target.contains("windows") {
         println!("cargo:rustc-link-lib=static=jemalloc");
     } else {
-        println!("cargo:rustc-link-lib=static=jemalloc_pic");
+        println!("cargo:rustc-link-lib=jemalloc");
     }
     println!("cargo:rustc-link-search=native={}/lib", build_dir.display());
     if target.contains("android") {

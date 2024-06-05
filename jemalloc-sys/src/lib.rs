@@ -127,6 +127,7 @@ pub const fn MALLOCX_ARENA(a: usize) -> c_int {
     (a as c_int).wrapping_add(1).wrapping_shl(20)
 }
 
+#[link(name = "jemalloc", kind = "dylib")]
 extern "C" {
     /// Allocates `size` bytes of uninitialized memory.
     ///
